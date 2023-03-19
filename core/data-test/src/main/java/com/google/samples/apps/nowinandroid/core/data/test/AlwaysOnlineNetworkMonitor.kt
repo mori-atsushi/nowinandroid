@@ -17,10 +17,13 @@
 package com.google.samples.apps.nowinandroid.core.data.test
 
 import com.google.samples.apps.nowinandroid.core.data.util.NetworkMonitor
+import com.moriatsushi.koject.Binds
+import com.moriatsushi.koject.test.TestProvides
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import javax.inject.Inject
 
-class AlwaysOnlineNetworkMonitor @Inject constructor() : NetworkMonitor {
+@TestProvides
+@Binds
+class AlwaysOnlineNetworkMonitor : NetworkMonitor {
     override val isOnline: Flow<Boolean> = flowOf(true)
 }

@@ -16,37 +16,38 @@
 
 package com.google.samples.apps.nowinandroid.sync.workers
 
+import android.app.Application
 import android.util.Log
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.core.app.ApplicationProvider
 import androidx.work.Configuration
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.testing.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
+import com.moriatsushi.koject.Koject
+import com.moriatsushi.koject.android.application
+import com.moriatsushi.koject.test.startTest
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
 
-@HiltAndroidTest
 class SyncWorkerTest {
-
-    @get:Rule(order = 0)
-    val hiltRule = HiltAndroidRule(this)
-
-    private val context get() = InstrumentationRegistry.getInstrumentation().context
+    private val application: Application
+        get() = ApplicationProvider.getApplicationContext()
 
     @Before
     fun setup() {
+        Koject.startTest {
+            application(application)
+        }
+
         val config = Configuration.Builder()
             .setMinimumLoggingLevel(Log.DEBUG)
             .setExecutor(SynchronousExecutor())
             .build()
 
         // Initialize WorkManager for instrumentation tests.
-        WorkManagerTestInitHelper.initializeTestWorkManager(context, config)
+        WorkManagerTestInitHelper.initializeTestWorkManager(application, config)
     }
 
     @Test
@@ -54,8 +55,8 @@ class SyncWorkerTest {
         // Create request
         val request = SyncWorker.startUpSyncWork()
 
-        val workManager = WorkManager.getInstance(context)
-        val testDriver = WorkManagerTestInitHelper.getTestDriver(context)!!
+        val workManager = WorkManager.getInstance(application)
+        val testDriver = WorkManagerTestInitHelper.getTestDriver(application)!!
 
         // Enqueue and wait for result.
         workManager.enqueue(request).result.get()

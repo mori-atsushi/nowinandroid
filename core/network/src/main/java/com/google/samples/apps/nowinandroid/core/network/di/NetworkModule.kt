@@ -22,19 +22,13 @@ import coil.decode.SvgDecoder
 import coil.util.DebugLogger
 import com.google.samples.apps.nowinandroid.core.network.BuildConfig
 import com.google.samples.apps.nowinandroid.core.network.fake.FakeAssetManager
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import com.moriatsushi.koject.Provides
+import com.moriatsushi.koject.Singleton
 import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
@@ -46,7 +40,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun providesFakeAssetManager(
-        @ApplicationContext context: Context,
+        context: Context,
     ): FakeAssetManager = FakeAssetManager(context.assets::open)
 
     @Provides
@@ -73,7 +67,7 @@ object NetworkModule {
     @Singleton
     fun imageLoader(
         okHttpCallFactory: Call.Factory,
-        @ApplicationContext application: Context,
+        application: Context,
     ): ImageLoader = ImageLoader.Builder(application)
         .callFactory(okHttpCallFactory)
         .components {

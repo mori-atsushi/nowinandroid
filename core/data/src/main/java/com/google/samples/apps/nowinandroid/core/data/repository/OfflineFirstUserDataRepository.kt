@@ -22,10 +22,13 @@ import com.google.samples.apps.nowinandroid.core.datastore.NiaPreferencesDataSou
 import com.google.samples.apps.nowinandroid.core.model.data.DarkThemeConfig
 import com.google.samples.apps.nowinandroid.core.model.data.ThemeBrand
 import com.google.samples.apps.nowinandroid.core.model.data.UserData
+import com.moriatsushi.koject.Binds
+import com.moriatsushi.koject.Provides
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class OfflineFirstUserDataRepository @Inject constructor(
+@Provides
+@Binds
+class OfflineFirstUserDataRepository(
     private val niaPreferencesDataSource: NiaPreferencesDataSource,
     private val analyticsHelper: AnalyticsHelper,
 ) : UserDataRepository {

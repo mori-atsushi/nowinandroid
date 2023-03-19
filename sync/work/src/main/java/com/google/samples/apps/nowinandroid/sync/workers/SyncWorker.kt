@@ -17,7 +17,6 @@
 package com.google.samples.apps.nowinandroid.sync.workers
 
 import android.content.Context
-import androidx.hilt.work.HiltWorker
 import androidx.tracing.traceAsync
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
@@ -34,8 +33,7 @@ import com.google.samples.apps.nowinandroid.core.network.Dispatcher
 import com.google.samples.apps.nowinandroid.core.network.NiaDispatchers.IO
 import com.google.samples.apps.nowinandroid.sync.initializers.SyncConstraints
 import com.google.samples.apps.nowinandroid.sync.initializers.syncForegroundInfo
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import com.moriatsushi.koject.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -45,14 +43,13 @@ import kotlinx.coroutines.withContext
  * Syncs the data layer by delegating to the appropriate repository instances with
  * sync functionality.
  */
-@HiltWorker
-class SyncWorker @AssistedInject constructor(
-    @Assisted private val appContext: Context,
-    @Assisted workerParams: WorkerParameters,
+class SyncWorker(
+    private val appContext: Context,
+    workerParams: WorkerParameters,
     private val niaPreferences: NiaPreferencesDataSource,
     private val topicRepository: TopicsRepository,
     private val newsRepository: NewsRepository,
-    @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
+    private val ioDispatcher: CoroutineDispatcher,
     private val analyticsHelper: AnalyticsHelper,
 ) : CoroutineWorker(appContext, workerParams), Synchronizer {
 
@@ -93,7 +90,31 @@ class SyncWorker @AssistedInject constructor(
         fun startUpSyncWork() = OneTimeWorkRequestBuilder<DelegatingWorker>()
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setConstraints(SyncConstraints)
-            .setInputData(SyncWorker::class.delegatedData())
             .build()
+    }
+
+    @Provides
+    class Factory(
+        private val niaPreferences: NiaPreferencesDataSource,
+        private val topicRepository: TopicsRepository,
+        private val newsRepository: NewsRepository,
+        @Dispatcher(IO)
+        private val ioDispatcher: CoroutineDispatcher,
+        private val analyticsHelper: AnalyticsHelper,
+    ) {
+        fun create(
+            appContext: Context,
+            workerParams: WorkerParameters,
+        ): SyncWorker {
+            return SyncWorker(
+                appContext,
+                workerParams,
+                niaPreferences,
+                topicRepository,
+                newsRepository,
+                ioDispatcher,
+                analyticsHelper,
+            )
+        }
     }
 }

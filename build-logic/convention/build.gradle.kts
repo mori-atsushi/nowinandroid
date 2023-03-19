@@ -67,9 +67,9 @@ gradlePlugin {
             id = "nowinandroid.android.test"
             implementationClass = "AndroidTestConventionPlugin"
         }
-        register("androidHilt") {
-            id = "nowinandroid.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
+        register("androidKojectLib") {
+            id = "nowinandroid.android.library.koject"
+            implementationClass = "AndroidLibraryKojectConventionPlugin"
         }
         register("androidRoom") {
             id = "nowinandroid.android.room"

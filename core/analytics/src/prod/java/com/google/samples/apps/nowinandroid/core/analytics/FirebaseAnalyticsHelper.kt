@@ -18,12 +18,15 @@ package com.google.samples.apps.nowinandroid.core.analytics
 
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
-import javax.inject.Inject
+import com.moriatsushi.koject.Binds
+import com.moriatsushi.koject.Provides
 
 /**
  * Implementation of `AnalyticsHelper` which logs events to a Firebase backend.
  */
-class FirebaseAnalyticsHelper @Inject constructor(
+@Provides
+@Binds
+class FirebaseAnalyticsHelper(
     private val firebaseAnalytics: FirebaseAnalytics,
 ) : AnalyticsHelper {
 

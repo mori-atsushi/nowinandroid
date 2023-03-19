@@ -16,7 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.core.network
 
-import javax.inject.Qualifier
+import com.moriatsushi.koject.Qualifier
 import kotlin.annotation.AnnotationRetention.RUNTIME
 
 @Qualifier

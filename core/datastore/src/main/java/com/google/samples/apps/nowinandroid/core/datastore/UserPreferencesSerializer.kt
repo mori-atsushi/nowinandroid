@@ -19,14 +19,17 @@ package com.google.samples.apps.nowinandroid.core.datastore
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import com.google.protobuf.InvalidProtocolBufferException
+import com.moriatsushi.koject.Provides
+import com.moriatsushi.koject.Singleton
 import java.io.InputStream
 import java.io.OutputStream
-import javax.inject.Inject
 
 /**
  * An [androidx.datastore.core.Serializer] for the [UserPreferences] proto.
  */
-class UserPreferencesSerializer @Inject constructor() : Serializer<UserPreferences> {
+@Provides
+@Singleton
+class UserPreferencesSerializer : Serializer<UserPreferences> {
     override val defaultValue: UserPreferences = UserPreferences.getDefaultInstance()
 
     override suspend fun readFrom(input: InputStream): UserPreferences =

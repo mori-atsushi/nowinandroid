@@ -17,8 +17,11 @@
 package com.google.samples.apps.nowinandroid.core.testing.decoder
 
 import com.google.samples.apps.nowinandroid.core.decoder.StringDecoder
-import javax.inject.Inject
+import com.moriatsushi.koject.Binds
+import com.moriatsushi.koject.test.TestProvides
 
-class FakeStringDecoder @Inject constructor() : StringDecoder {
+@TestProvides
+@Binds
+class FakeStringDecoder : StringDecoder {
     override fun decodeString(encodedString: String): String = encodedString
 }

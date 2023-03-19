@@ -16,42 +16,33 @@
 
 package com.google.samples.apps.nowinandroid.core.data.test
 
-import com.google.samples.apps.nowinandroid.core.data.di.DataModule
 import com.google.samples.apps.nowinandroid.core.data.repository.NewsRepository
 import com.google.samples.apps.nowinandroid.core.data.repository.TopicsRepository
 import com.google.samples.apps.nowinandroid.core.data.repository.UserDataRepository
 import com.google.samples.apps.nowinandroid.core.data.repository.fake.FakeNewsRepository
 import com.google.samples.apps.nowinandroid.core.data.repository.fake.FakeTopicsRepository
 import com.google.samples.apps.nowinandroid.core.data.repository.fake.FakeUserDataRepository
-import com.google.samples.apps.nowinandroid.core.data.util.NetworkMonitor
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.components.SingletonComponent
-import dagger.hilt.testing.TestInstallIn
+import com.moriatsushi.koject.test.TestProvides
 
-@Module
-@TestInstallIn(
-    components = [SingletonComponent::class],
-    replaces = [DataModule::class],
-)
-interface TestDataModule {
-    @Binds
+object TestDataModule {
+    @TestProvides
     fun bindsTopicRepository(
         fakeTopicsRepository: FakeTopicsRepository,
-    ): TopicsRepository
+    ): TopicsRepository {
+        return fakeTopicsRepository
+    }
 
-    @Binds
+    @TestProvides
     fun bindsNewsResourceRepository(
         fakeNewsRepository: FakeNewsRepository,
-    ): NewsRepository
+    ): NewsRepository {
+        return fakeNewsRepository
+    }
 
-    @Binds
+    @TestProvides
     fun bindsUserDataRepository(
         userDataRepository: FakeUserDataRepository,
-    ): UserDataRepository
-
-    @Binds
-    fun bindsNetworkMonitor(
-        networkMonitor: AlwaysOnlineNetworkMonitor,
-    ): NetworkMonitor
+    ): UserDataRepository {
+        return userDataRepository
+    }
 }

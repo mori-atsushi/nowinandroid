@@ -15,7 +15,7 @@
  */
 plugins {
     id("nowinandroid.android.library")
-    id("nowinandroid.android.hilt")
+    id("nowinandroid.android.library.koject")
 }
 
 android {
@@ -26,3 +26,4 @@ dependencies {
     api(project(":core:data"))
     implementation(project(":core:testing"))
 }
+

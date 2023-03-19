@@ -16,7 +16,7 @@
 plugins {
     id("nowinandroid.android.library")
     id("nowinandroid.android.library.jacoco")
-    id("nowinandroid.android.hilt")
+    id("nowinandroid.android.library.koject")
 }
 
 android {
@@ -39,12 +39,13 @@ dependencies {
     implementation(libs.androidx.tracing.ktx)
     implementation(libs.androidx.startup)
     implementation(libs.androidx.work.ktx)
-    implementation(libs.hilt.ext.work)
+    implementation(libs.androidx.core.ktx)
 
     testImplementation(project(":core:testing"))
     androidTestImplementation(project(":core:testing"))
 
-    kapt(libs.hilt.ext.compiler)
-
     androidTestImplementation(libs.androidx.work.testing)
+    androidTestImplementation(libs.koject.android.core)
+
+    kspAndroidTest(libs.koject.processor.app)
 }

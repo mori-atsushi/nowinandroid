@@ -30,7 +30,8 @@ import com.google.samples.apps.nowinandroid.core.model.data.Topic
 import com.google.samples.apps.nowinandroid.core.result.Result
 import com.google.samples.apps.nowinandroid.core.result.asResult
 import com.google.samples.apps.nowinandroid.feature.topic.navigation.TopicArgs
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.moriatsushi.koject.Provides
+import com.moriatsushi.koject.android.viewmodel.ViewModelComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -38,10 +39,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class TopicViewModel @Inject constructor(
+@ViewModelComponent
+@Provides
+class TopicViewModel(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val userDataRepository: UserDataRepository,

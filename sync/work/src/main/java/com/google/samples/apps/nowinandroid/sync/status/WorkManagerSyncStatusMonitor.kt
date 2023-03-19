@@ -24,16 +24,18 @@ import androidx.work.WorkInfo.State
 import androidx.work.WorkManager
 import com.google.samples.apps.nowinandroid.core.data.util.SyncStatusMonitor
 import com.google.samples.apps.nowinandroid.sync.initializers.SyncWorkName
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.moriatsushi.koject.Binds
+import com.moriatsushi.koject.Provides
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.conflate
-import javax.inject.Inject
 
 /**
  * [SyncStatusMonitor] backed by [WorkInfo] from [WorkManager]
  */
-class WorkManagerSyncStatusMonitor @Inject constructor(
-    @ApplicationContext context: Context,
+@Provides
+@Binds
+class WorkManagerSyncStatusMonitor(
+    context: Context,
 ) : SyncStatusMonitor {
     override val isSyncing: Flow<Boolean> =
         WorkManager.getInstance(context).getWorkInfosForUniqueWorkLiveData(SyncWorkName)

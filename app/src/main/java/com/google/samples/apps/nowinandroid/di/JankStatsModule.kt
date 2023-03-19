@@ -20,14 +20,11 @@ import android.app.Activity
 import android.util.Log
 import android.view.Window
 import androidx.metrics.performance.JankStats
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import com.moriatsushi.koject.Provides
+import com.moriatsushi.koject.android.activity.ActivityComponent
 
-@Module
-@InstallIn(ActivityComponent::class)
 object JankStatsModule {
+    @ActivityComponent
     @Provides
     fun providesOnFrameListener(): JankStats.OnFrameListener {
         return JankStats.OnFrameListener { frameData ->
@@ -39,11 +36,13 @@ object JankStatsModule {
         }
     }
 
+    @ActivityComponent
     @Provides
     fun providesWindow(activity: Activity): Window {
         return activity.window
     }
 
+    @ActivityComponent
     @Provides
     fun providesJankStats(
         window: Window,

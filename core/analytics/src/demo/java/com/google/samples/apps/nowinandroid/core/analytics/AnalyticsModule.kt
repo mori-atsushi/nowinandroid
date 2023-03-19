@@ -16,14 +16,11 @@
 
 package com.google.samples.apps.nowinandroid.core.analytics
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.moriatsushi.koject.Provides
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class AnalyticsModule {
-    @Binds
-    abstract fun bindsAnalyticsHelper(analyticsHelperImpl: StubAnalyticsHelper): AnalyticsHelper
+object AnalyticsModule {
+    @Provides
+    fun bindsAnalyticsHelper(analyticsHelperImpl: StubAnalyticsHelper): AnalyticsHelper {
+        return analyticsHelperImpl
+    }
 }

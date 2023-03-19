@@ -17,8 +17,11 @@
 package com.google.samples.apps.nowinandroid.core.decoder
 
 import android.net.Uri
-import javax.inject.Inject
+import com.moriatsushi.koject.Binds
+import com.moriatsushi.koject.Provides
 
-class UriDecoder @Inject constructor() : StringDecoder {
+@Provides
+@Binds
+class UriDecoder : StringDecoder {
     override fun decodeString(encodedString: String): String = Uri.decode(encodedString)
 }

@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.ui
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -26,50 +27,30 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.testharness.TestHarness
 import com.google.samples.apps.nowinandroid.core.data.util.NetworkMonitor
-import com.google.samples.apps.nowinandroid.uitesthiltmanifest.HiltComponentActivity
-import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
-import org.junit.Before
+import com.moriatsushi.koject.inject
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import javax.inject.Inject
 
 /**
  * Tests that the navigation UI is rendered correctly on different screen sizes.
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@HiltAndroidTest
 class NavigationUiTest {
-
-    /**
-     * Manages the components' state and is used to perform injection on your test
-     */
     @get:Rule(order = 0)
-    val hiltRule = HiltAndroidRule(this)
-
-    /**
-     * Create a temporary folder used to create a Data Store file. This guarantees that
-     * the file is removed in between each test, preventing a crash.
-     */
-    @BindValue
-    @get:Rule(order = 1)
     val tmpFolder: TemporaryFolder = TemporaryFolder.builder().assureDeletion().build()
+
+    @get:Rule(order = 1)
+    val kojectTestRule = KojectTestRule(tmpFolder)
 
     /**
      * Use a test activity to set the content on.
      */
     @get:Rule(order = 2)
-    val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
+    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    @Inject
-    lateinit var networkMonitor: NetworkMonitor
-
-    @Before
-    fun setup() {
-        hiltRule.inject()
-    }
+    private val networkMonitor: NetworkMonitor
+        get() = inject()
 
     @Test
     fun compactWidth_compactHeight_showsNavigationBar() {

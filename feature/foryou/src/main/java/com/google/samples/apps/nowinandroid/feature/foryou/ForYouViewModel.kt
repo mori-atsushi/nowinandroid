@@ -26,7 +26,8 @@ import com.google.samples.apps.nowinandroid.core.domain.GetUserNewsResourcesUseC
 import com.google.samples.apps.nowinandroid.core.domain.model.UserNewsResource
 import com.google.samples.apps.nowinandroid.core.model.data.UserData
 import com.google.samples.apps.nowinandroid.core.ui.NewsFeedUiState
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.moriatsushi.koject.Provides
+import com.moriatsushi.koject.android.viewmodel.ViewModelComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -37,10 +38,10 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class ForYouViewModel @Inject constructor(
+@ViewModelComponent
+@Provides
+class ForYouViewModel(
     syncStatusMonitor: SyncStatusMonitor,
     private val userDataRepository: UserDataRepository,
     getUserNewsResources: GetUserNewsResourcesUseCase,
