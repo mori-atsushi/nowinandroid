@@ -1,21 +1,15 @@
 ![Now in Android](docs/images/nia-splash.jpg "Now in Android")
 
-<a href="https://play.google.com/store/apps/details?id=com.google.samples.apps.nowinandroid"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70"></a>
-
-Now in Android App
+Now in Android App with "Koject"
 ==================
 
-**Learn how this app was designed and built in the [design case study](https://goo.gle/nia-figma), [architecture learning journey](docs/ArchitectureLearningJourney.md) and [modularization learning journey](docs/ModularizationLearningJourney.md).**
+This is a demonstration of how to use the DI container library [Koject](https://github.com/mori-atsushi/koject) based on the Android sample app [Now in Android](https://github.com/android/nowinandroid).
 
-This is the repository for the [Now in Android](https://developer.android.com/series/now-in-android)
-app. It is a **work in progress** 🚧.
+Koject is a DI container library for Kotlin Multiplatform.
 
-**Now in Android** is a fully functional Android app built entirely with Kotlin and Jetpack Compose. It
-follows Android design and development best practices and is intended to be a useful reference
-for developers. As a running app, it's intended to help developers keep up-to-date with the world
-of Android development by providing regular news updates.
+In this project, [Dagger Hilt](https://dagger.dev/hilt/) was originally used as the DI container, but it has been migrated to Koject. You can see all the changes in [this PR](https://github.com/mori-atsushi/nowinandroid/pull/1).
 
-The app is currently in development. The `demoRelease` variant is [available on the Play Store in open beta](https://play.google.com/store/apps/details?id=com.google.samples.apps.nowinandroid).
+Koject can be used simply with annotation-based methods, just like Dagger Hilt. Additionally, it uses code generation with [KSP](https://github.com/google/ksp), making it faster than [kapt](https://kotlinlang.org/docs/kapt.html).
 
 # Features
 
@@ -87,14 +81,13 @@ For normal development use the `demoDebug` variant. For UI performance testing u
 
 # Testing
 
-To facilitate testing of components, **Now in Android** uses dependency injection with
-[Hilt](https://developer.android.com/training/dependency-injection/hilt-android).
+To facilitate testing of components, **Now in Android** uses dependency injection with Koject.
 
 Most data layer components are defined as interfaces.
 Then, concrete implementations (with various dependencies) are bound to provide those interfaces to
 other components in the app.
 In tests, **Now in Android** notably does _not_ use any mocking libraries.
-Instead, the production implementations can be replaced with test doubles using Hilt's testing APIs
+Instead, the production implementations can be replaced with test doubles using Koject's testing APIs
 (or via manual constructor injection for `ViewModel` tests).
 
 These test doubles implement the same interface as the production implementations and generally
