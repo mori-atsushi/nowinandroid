@@ -17,10 +17,13 @@
 package com.google.samples.apps.nowinandroid.core.sync.test
 
 import com.google.samples.apps.nowinandroid.core.data.util.SyncStatusMonitor
+import com.moriatsushi.koject.Binds
+import com.moriatsushi.koject.test.TestProvides
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import javax.inject.Inject
 
-class NeverSyncingSyncStatusMonitor @Inject constructor() : SyncStatusMonitor {
+@TestProvides
+@Binds
+class NeverSyncingSyncStatusMonitor : SyncStatusMonitor {
     override val isSyncing: Flow<Boolean> = flowOf(false)
 }

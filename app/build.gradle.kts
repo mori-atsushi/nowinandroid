@@ -20,9 +20,9 @@ plugins {
     id("nowinandroid.android.application.compose")
     id("nowinandroid.android.application.flavors")
     id("nowinandroid.android.application.jacoco")
-    id("nowinandroid.android.hilt")
     id("jacoco")
     id("nowinandroid.android.application.firebase")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -31,7 +31,6 @@ android {
         versionCode = 5
         versionName = "0.0.5" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
-        // Custom test runner to set up Hilt dependency graph
         testInstrumentationRunner = "com.google.samples.apps.nowinandroid.core.testing.NiaTestRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -102,7 +101,6 @@ dependencies {
     androidTestImplementation(libs.accompanist.testharness)
     androidTestImplementation(kotlin("test"))
     debugImplementation(libs.androidx.compose.ui.testManifest)
-    debugImplementation(project(":ui-test-hilt-manifest"))
 
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.activity.compose)
@@ -113,12 +111,15 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.compose.runtime.tracing)
     implementation(libs.androidx.compose.material3.windowSizeClass)
-    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.window.manager)
     implementation(libs.androidx.profileinstaller)
 
     implementation(libs.coil.kt)
+
+    implementation(libs.koject.android.core)
+    implementation(libs.koject.android.activity)
+    ksp(libs.koject.processor.app)
 }
 
 // androidx.test is forcing JUnit, 4.12. This forces it to use 4.13

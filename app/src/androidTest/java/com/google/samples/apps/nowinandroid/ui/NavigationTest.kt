@@ -31,9 +31,6 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.NoActivityResumedException
 import com.google.samples.apps.nowinandroid.MainActivity
 import com.google.samples.apps.nowinandroid.R
-import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,22 +43,12 @@ import com.google.samples.apps.nowinandroid.feature.settings.R as SettingsR
 /**
  * Tests all the navigation flows that are handled by the navigation library.
  */
-@HiltAndroidTest
 class NavigationTest {
-
-    /**
-     * Manages the components' state and is used to perform injection on your test
-     */
     @get:Rule(order = 0)
-    val hiltRule = HiltAndroidRule(this)
-
-    /**
-     * Create a temporary folder used to create a Data Store file. This guarantees that
-     * the file is removed in between each test, preventing a crash.
-     */
-    @BindValue
-    @get:Rule(order = 1)
     val tmpFolder: TemporaryFolder = TemporaryFolder.builder().assureDeletion().build()
+
+    @get:Rule(order = 1)
+    val kojectTestRule = KojectTestRule(tmpFolder)
 
     /**
      * Use the primary activity to initialize the app normally.

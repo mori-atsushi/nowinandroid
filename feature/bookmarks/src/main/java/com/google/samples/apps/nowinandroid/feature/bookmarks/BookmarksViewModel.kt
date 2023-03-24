@@ -23,7 +23,8 @@ import com.google.samples.apps.nowinandroid.core.domain.GetUserNewsResourcesUseC
 import com.google.samples.apps.nowinandroid.core.domain.model.UserNewsResource
 import com.google.samples.apps.nowinandroid.core.ui.NewsFeedUiState
 import com.google.samples.apps.nowinandroid.core.ui.NewsFeedUiState.Loading
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.moriatsushi.koject.Provides
+import com.moriatsushi.koject.android.viewmodel.ViewModelComponent
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNot
@@ -31,10 +32,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class BookmarksViewModel @Inject constructor(
+@ViewModelComponent
+@Provides
+class BookmarksViewModel(
     private val userDataRepository: UserDataRepository,
     getSaveableNewsResources: GetUserNewsResourcesUseCase,
 ) : ViewModel() {

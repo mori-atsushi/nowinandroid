@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import com.google.devtools.ksp.gradle.KspExtension
 import com.google.protobuf.gradle.builtins
 import com.google.protobuf.gradle.generateProtoTasks
 import com.google.protobuf.gradle.protobuf
@@ -24,7 +25,7 @@ import com.google.protobuf.gradle.protoc
 plugins {
     id("nowinandroid.android.library")
     id("nowinandroid.android.library.jacoco")
-    id("nowinandroid.android.hilt")
+    id("nowinandroid.android.library.koject")
     alias(libs.plugins.protobuf)
 }
 

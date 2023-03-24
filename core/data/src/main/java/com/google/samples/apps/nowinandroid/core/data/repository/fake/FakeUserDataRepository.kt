@@ -21,8 +21,8 @@ import com.google.samples.apps.nowinandroid.core.datastore.NiaPreferencesDataSou
 import com.google.samples.apps.nowinandroid.core.model.data.DarkThemeConfig
 import com.google.samples.apps.nowinandroid.core.model.data.ThemeBrand
 import com.google.samples.apps.nowinandroid.core.model.data.UserData
+import com.moriatsushi.koject.Provides
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
 /**
  * Fake implementation of the [UserDataRepository] that returns hardcoded user data.
@@ -30,7 +30,8 @@ import javax.inject.Inject
  * This allows us to run the app with fake data, without needing an internet connection or working
  * backend.
  */
-class FakeUserDataRepository @Inject constructor(
+@Provides
+class FakeUserDataRepository(
     private val niaPreferencesDataSource: NiaPreferencesDataSource,
 ) : UserDataRepository {
 

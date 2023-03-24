@@ -22,16 +22,17 @@ import com.google.samples.apps.nowinandroid.core.data.repository.UserDataReposit
 import com.google.samples.apps.nowinandroid.core.domain.GetFollowableTopicsUseCase
 import com.google.samples.apps.nowinandroid.core.domain.TopicSortField
 import com.google.samples.apps.nowinandroid.core.domain.model.FollowableTopic
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.moriatsushi.koject.Provides
+import com.moriatsushi.koject.android.viewmodel.ViewModelComponent
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class InterestsViewModel @Inject constructor(
+@ViewModelComponent
+@Provides
+class InterestsViewModel(
     val userDataRepository: UserDataRepository,
     getFollowableTopics: GetFollowableTopicsUseCase,
 ) : ViewModel() {

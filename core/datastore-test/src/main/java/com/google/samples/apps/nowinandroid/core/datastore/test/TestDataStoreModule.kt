@@ -20,27 +20,18 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import com.google.samples.apps.nowinandroid.core.datastore.UserPreferences
 import com.google.samples.apps.nowinandroid.core.datastore.UserPreferencesSerializer
-import com.google.samples.apps.nowinandroid.core.datastore.di.DataStoreModule
 import com.google.samples.apps.nowinandroid.core.network.Dispatcher
 import com.google.samples.apps.nowinandroid.core.network.NiaDispatchers.IO
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.components.SingletonComponent
-import dagger.hilt.testing.TestInstallIn
+import com.moriatsushi.koject.Singleton
+import com.moriatsushi.koject.test.TestProvides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.junit.rules.TemporaryFolder
-import javax.inject.Singleton
 
-@Module
-@TestInstallIn(
-    components = [SingletonComponent::class],
-    replaces = [DataStoreModule::class],
-)
 object TestDataStoreModule {
 
-    @Provides
+    @TestProvides
     @Singleton
     fun providesUserPreferencesDataStore(
         @Dispatcher(IO) ioDispatcher: CoroutineDispatcher,

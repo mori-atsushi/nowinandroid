@@ -19,7 +19,6 @@ package com.google.samples.apps.nowinandroid
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -45,29 +44,25 @@ import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
 import com.google.samples.apps.nowinandroid.core.model.data.DarkThemeConfig
 import com.google.samples.apps.nowinandroid.core.model.data.ThemeBrand
 import com.google.samples.apps.nowinandroid.ui.NiaApp
-import dagger.hilt.android.AndroidEntryPoint
+import com.moriatsushi.koject.android.activity.lazyViewModels
+import com.moriatsushi.koject.lazyInject
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     /**
      * Lazily inject [JankStats], which is used to track jank throughout the app.
      */
-    @Inject
-    lateinit var lazyStats: dagger.Lazy<JankStats>
+    private val lazyStats: JankStats by lazyInject()
 
-    @Inject
-    lateinit var networkMonitor: NetworkMonitor
+    private val networkMonitor: NetworkMonitor by lazyInject()
 
-    @Inject
-    lateinit var analyticsHelper: AnalyticsHelper
+    private val analyticsHelper: AnalyticsHelper by lazyInject()
 
-    val viewModel: MainActivityViewModel by viewModels()
+    val viewModel: MainActivityViewModel by lazyViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -127,12 +122,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        lazyStats.get().isTrackingEnabled = true
+        lazyStats.isTrackingEnabled = true
     }
 
     override fun onPause() {
         super.onPause()
-        lazyStats.get().isTrackingEnabled = false
+        lazyStats.isTrackingEnabled = false
     }
 }
 

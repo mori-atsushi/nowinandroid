@@ -30,9 +30,10 @@ import com.google.samples.apps.nowinandroid.core.datastore.ChangeListVersions
 import com.google.samples.apps.nowinandroid.core.model.data.NewsResource
 import com.google.samples.apps.nowinandroid.core.network.NiaNetworkDataSource
 import com.google.samples.apps.nowinandroid.core.network.model.NetworkNewsResource
+import com.moriatsushi.koject.Binds
+import com.moriatsushi.koject.Provides
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 // Heuristic value to optimize for serialization and deserialization cost on client and server
 // for each news resource batch.
@@ -42,7 +43,9 @@ private const val SYNC_BATCH_SIZE = 40
  * Disk storage backed implementation of the [NewsRepository].
  * Reads are exclusively from local storage to support offline access.
  */
-class OfflineFirstNewsRepository @Inject constructor(
+@Provides
+@Binds
+class OfflineFirstNewsRepository(
     private val newsResourceDao: NewsResourceDao,
     private val topicDao: TopicDao,
     private val network: NiaNetworkDataSource,
